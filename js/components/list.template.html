@@ -1,20 +1,18 @@
 <div class="list">
   <div class="list-header">
-    <h2>{{title}}</h2>
+    <h2>{{$ctrl.list.title}}</h2>
 
-    <delete></delete>
+    <delete delete="$ctrl.deleteList"></delete>
   </div>
 
-  <ul>
-    {{#each tasks}}
-      <div class="item">
-        <li>{{task}}</li>
+  <ul ng-repeat="task in $ctrl.list.tasks">
+    <div class="item">
+      <li>{{task}}</li>
 
-        <task-management></task-management>
+      <task-management></task-management>
 
-        <delete></delete>
-      </div>
-    {{/each}}
+      <delete delete="$ctrl.deleteTask"></delete>
+    </div>
   </ul>
 
   <div class="tools">

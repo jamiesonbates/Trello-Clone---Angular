@@ -3,7 +3,11 @@
 <new-list></new-list>
 
 <main>
-  <div class="all-lists">
-    <list></list>
+  <div class="all-lists" ng-repeat="list in $ctrl.lists">
+    <list
+      list={{list}}
+      delete-list="$ctrl.deleteList"
+      delete-task="$ctrl.deleteTask">
+    </list>
   </div>
 </main>
