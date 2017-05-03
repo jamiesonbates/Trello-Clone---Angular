@@ -1,11 +1,27 @@
 (function() {
   'use strict';
 
-  angular.module('app')
+  angular.module('app', [])
     .component('home', {
-      templateUrl: '/home.template.html',
-      controller
-    })
+      controller,
+      template: `
+        <heading></heading>
+
+        <new-list></new-list>
+
+        <main>
+          <div class="all-lists" ng-repeat="list in $ctrl.lists">
+            <list
+              list={{list}}
+              delete-list="$ctrl.deleteList"
+              delete-task="$ctrl.deleteTask"
+              add-task="$ctrl.addTask"
+              update-task="$ctrl.updateTask">
+            </list>
+          </div>
+        </main>
+      `
+    });
 
   function controller() {
     const vm = this;
@@ -14,7 +30,7 @@
       vm.lists = [{
           id: 1,
           title: 'My List',
-          tasks: [{ id: 1, name: 'Do your homework'}, { id: 2, name: 'Go to school' }, { id: 3, name: 'Eat dinner', 'Go to the gym' }, { id: 4, name: 'Write in journal' }]
+          tasks: [{ id: 1, name: 'Do your homework' }, { id: 2, name: 'Go to school' }, { id: 3, name: 'Eat dinner'}, { id: 4, name: 'Go to the gym' }, { id: 5, name: 'Write in journal' }]
         },
         {
           id: 2,
