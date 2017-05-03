@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html ng-app"app">
   <head>
     <meta charset="utf-8">
     <title>ToDo App</title>
 
+    <base href="/">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/style.css">
 
+    <script defer src="./js/dependencies/angular.min.js"></script>
+    <script defer src="./js/dependencies/angular-ui-router.min.js"></script>
+    <script defer src="./js/dependencies/moment.min.js"></script>
+    <script defer src="./js/dependencies/angular-moment.min.js"></script>
     <script defer src="https://code.jquery.com/jquery-2.2.4.min.js"></script> <script defer src="/index.js"></script>
   </head>
   <body>
-    {{> nav}}
 
-    <main>
-      {{{body}}}
-    </main>
+    <ui-view></ui-view>
 
   </body>
 </html>
