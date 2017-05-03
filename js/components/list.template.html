@@ -1,0 +1,25 @@
+<div class="list">
+  <div class="list-header">
+    <h2>{{title}}</h2>
+
+    <delete></delete>
+  </div>
+
+  <ul>
+    {{#each tasks}}
+      <div class="item">
+        <li>{{task}}</li>
+
+        <task-management></task-management>
+
+        <delete></delete>
+      </div>
+    {{/each}}
+  </ul>
+
+  <div class="tools">
+    <button class="add-item">Add an item...</button>
+
+    <task-management></task-management>
+  </div>
+</div>
