@@ -22,11 +22,11 @@
 
         <ul>
           <div ng-repeat="task in $ctrl.list.tasks">
-            <div class="item" ng-mouseenter="$ctrl.hovering(task.id, $ctrl.list.id)" ng-mouseleave="$ctrl.notHovering()">
+            <div class="item" ng-mouseenter="$ctrl.toggleHoverTask(task.id, $ctrl.list.id)" ng-mouseleave="$ctrl.toggleHoverTask(0, 0)">
               <li ng-show="!$ctrl.showEditForm(task.id, $ctrl.list.id)">{{task.name}}</li>
 
               <div ng-show="$ctrl.showEditOpt(task.id, $ctrl.list.id)">
-                <button class="btn edit-btn" ng-click="$ctrl.clickedToEnterEdit(task.id, task.name, $ctrl.list.id)">
+                <button class="btn edit-btn" ng-click="$ctrl.toggleEditForm(task.id, task.name, $ctrl.list.id)">
                   <i class="fa fa-pencil"></i>
                 </button>
               </div>
@@ -36,7 +36,7 @@
                   <textarea name="task" ng-model="$ctrl.updatedTask" class="item-to-add" warp="soft" autofocus>{{task.name}}</textarea>
                   <div>
                     <button type="button" ng-click="$ctrl.updateTask({ listId: $ctrl.list.id, taskId: task.id, update: $ctrl.updatedTask })" class="add-btn btn">Save</button>
-                    <button type="button" ng-click="$ctrl.clickedToExitEdit()" class="exit-btn" id="exit-add-form">
+                    <button type="button" ng-click="$ctrl.toggleEditForm(0, '', 0)" class="exit-btn" id="exit-add-form">
                       <i class="fa fa-times"></i>
                     </button>
                   </div>
@@ -54,7 +54,7 @@
           <button
             class="add-item"
             ng-show="!$ctrl.showAddForm($ctrl.list.id)"
-            ng-click="$ctrl.clickedToEnterAdd($ctrl.list.id)">
+            ng-click="$ctrl.toggleAddForm($ctrl.list.id)">
             Add an item...
           </button>
 
@@ -66,7 +66,7 @@
               <button type="button" ng-click="$ctrl.addTask({ listId: $ctrl.list.id, addition: $ctrl.newTask })" class="add-btn btn">
                 Add
               </button>
-              <button type="button" ng-click="$ctrl.clickedToExitAdd()" class="exit-btn" id="exit-add-form">
+              <button type="button" ng-click="$ctrl.toggleAddForm(0)" class="exit-btn" id="exit-add-form">
                 <i class="fa fa-times"></i>
               </button>
             </div>
@@ -77,7 +77,6 @@
 
     function controller() {
       const vm = this;
-      console.log(vm);
 
       vm.$onInit = function() {
         vm.currentTask = 0;
@@ -94,14 +93,9 @@
         }
       }
 
-      vm.hovering = function(taskId, listId) {
-        vm.currentTask = taskId;
-        vm.currentList = listId;
-      }
-
-      vm.notHovering = function() {
-        vm.currentTask = 0;
-        vm.currentList = 0;
+      vm.toggleHoverTask = function(task, list) {
+        vm.currentTask = task;
+        vm.currentList = list;
       }
 
       vm.showEditOpt = function(taskId, listId) {
@@ -112,17 +106,11 @@
         return false;
       }
 
-      vm.clickedToEnterEdit = function(taskId, task, listId) {
+      vm.toggleEditForm = function(taskId, task, listId) {
         vm.updatedTask = task;
-        vm.editing = true;
+        vm.editing = !vm.editing;
         vm.clickedTask = taskId;
         vm.clickedList = listId;
-      }
-
-      vm.clickedToExitEdit = function() {
-        vm.editing = false;
-        vm.clickedTask = 0;
-        vm.clickedList = 0;
       }
 
       vm.showEditForm = function(taskId, listId) {
@@ -133,12 +121,8 @@
         return false;
       }
 
-      vm.clickedToEnterAdd = function(listId) {
-        vm.listToAddTo = listId;
-      }
-
-      vm.clickedToExitAdd = function() {
-        vm.listToAddTo = 0;
+      vm.toggleAddForm = function(list) {
+        vm.listToAddTo = list;
       }
 
       vm.showAddForm = function(listId) {

@@ -44,7 +44,6 @@
     }
 
     vm.addList = function(title) {
-      console.log(title);
       const nextLists = vm.lists;
 
       nextLists.push({ id: vm.lists.length + 1, title, tasks: [] });
