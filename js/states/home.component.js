@@ -18,8 +18,8 @@
                 list=list
                 delete-list="$ctrl.deleteList(listId)"
                 delete-task="$ctrl.deleteTask(listId, taskId)"
-                add-task="$ctrl.addTask"
-                update-task="$ctrl.updateTask">
+                add-task="$ctrl.addTask(listId, addition)"
+                update-task="$ctrl.updateTask(listId, taskId, update)">
               </list>
             </div>
           </div>
@@ -86,6 +86,7 @@
     }
 
     vm.updateTask = function(listId, taskId, update) {
+      console.log(listId, taskId, update);
       const nextLists = [];
       const nextTasks = [];
 

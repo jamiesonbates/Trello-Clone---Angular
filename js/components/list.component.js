@@ -7,7 +7,9 @@
       bindings: {
         list: '<',
         deleteList: '&',
-        deleteTask: '&'
+        deleteTask: '&',
+        addTask: '&',
+        updateTask: '&'
       },
       template: `
         <div class="list-header">
@@ -24,16 +26,16 @@
               <li ng-show="!$ctrl.showEditForm(task.id, $ctrl.list.id)">{{task.name}}</li>
 
               <div ng-show="$ctrl.showEditOpt(task.id, $ctrl.list.id)">
-                <button class="btn edit-btn" ng-click="$ctrl.clickedToEnterEdit(task.id, $ctrl.list.id)">
+                <button class="btn edit-btn" ng-click="$ctrl.clickedToEnterEdit(task.id, task.name, $ctrl.list.id)">
                   <i class="fa fa-pencil"></i>
                 </button>
               </div>
 
               <div class="edit-item" ng-show="$ctrl.showEditForm(task.id, $ctrl.list.id)">
-                <form novalidate ng-submit="">
-                  <textarea name="task" class="item-to-add" warp="soft" autofocus>{{task.name}}</textarea>
+                <form novalidate>
+                  <textarea name="task" ng-model="$ctrl.updatedTask" class="item-to-add" warp="soft" autofocus>{{task.name}}</textarea>
                   <div>
-                    <button type="submit" class="add-btn btn">Save</button>
+                    <button type="button" ng-click="$ctrl.updateTask({ listId: $ctrl.list.id, taskId: task.id, update: $ctrl.updatedTask })" class="add-btn btn">Save</button>
                     <button type="button" ng-click="$ctrl.clickedToExitEdit()" class="exit-btn" id="exit-add-form">
                       <i class="fa fa-times"></i>
                     </button>
@@ -56,10 +58,14 @@
             Add an item...
           </button>
 
-          <form novalidate ng-submit="" ng-show="$ctrl.showAddForm($ctrl.list.id)">
-            <textarea name="task" placeholder="Add item" class="item-to-add" warp="soft" autofocus></textarea>
+          <form
+            novalidate
+            ng-show="$ctrl.showAddForm($ctrl.list.id)">
+            <textarea name="task" placeholder="Add item" ng-model="$ctrl.newTask" class="item-to-add" warp="soft" autofocus></textarea>
             <div>
-              <button type="submit" class="add-btn btn">Add</button>
+              <button type="button" ng-click="$ctrl.addTask({ listId: $ctrl.list.id, addition: $ctrl.newTask })" class="add-btn btn">
+                Add
+              </button>
               <button type="button" ng-click="$ctrl.clickedToExitAdd()" class="exit-btn" id="exit-add-form">
                 <i class="fa fa-times"></i>
               </button>
@@ -79,6 +85,8 @@
         vm.clickedTask = 0;
         vm.clickedList = 0;
         vm.listToAddTo = 0;
+        vm.newTask = '';
+        vm.updatedTask = '';
         vm.editing = false;
         vm.btnText = {
           add: 'Add',
@@ -104,7 +112,8 @@
         return false;
       }
 
-      vm.clickedToEnterEdit = function(taskId, listId) {
+      vm.clickedToEnterEdit = function(taskId, task, listId) {
+        vm.updatedTask = task;
         vm.editing = true;
         vm.clickedTask = taskId;
         vm.clickedList = listId;
