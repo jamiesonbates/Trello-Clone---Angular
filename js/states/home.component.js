@@ -1,23 +1,27 @@
 (function() {
   'use strict';
 
-  angular.module('app', [])
+  angular.module('app')
     .component('home', {
       controller,
       template: `
-        <heading></heading>
-
-        <new-list></new-list>
+        <header>
+          <h1>ToDoly</h1>
+        </header>
 
         <main>
-          <div class="all-lists" ng-repeat="list in $ctrl.lists">
-            <list
-              list={{list}}
-              delete-list="$ctrl.deleteList"
-              delete-task="$ctrl.deleteTask"
-              add-task="$ctrl.addTask"
-              update-task="$ctrl.updateTask">
-            </list>
+          <new-list></new-list>
+
+          <div class="all-lists">
+            <div class="list" ng-repeat="list in $ctrl.lists">
+              <list
+                list=list
+                delete-list="$ctrl.deleteList(listId)"
+                delete-task="$ctrl.deleteTask(listId, taskId)"
+                add-task="$ctrl.addTask"
+                update-task="$ctrl.updateTask">
+              </list>
+            </div>
           </div>
         </main>
       `
@@ -43,15 +47,14 @@
       const nextLists = [];
 
       for (const list of vm.lists) {
-        if (list.id === listId) {
-          return;
+        if (list.id !== listId) {
+          nextLists.push({
+            id: nextLists.length + 1,
+            title: list.title,
+            tasks: list.tasks
+          });
         }
 
-        nextLists.push({
-          id: nextLists.length + 1,
-          title: list.title,
-          tasks: list.tasks
-        });
       }
 
       vm.lists = nextLists;
@@ -64,14 +67,12 @@
       for (const list of vm.lists) {
         if (list.id === listId) {
           for (const task of list.tasks) {
-            if (task.id === taskId) {
-              return;
+            if (task.id !== taskId) {
+              nextTasks.push({
+                id: nextTasks.length + 1,
+                name: task.name
+              });
             }
-
-            nextTasks.push({
-              id: nextTasks.length + 1,
-              name: task.name
-            });
 
           }
 

@@ -30,7 +30,12 @@ header h1 {
   color: #E8EDE2;
 }
 
-main {
+home {
+  display: flex;
+  flex-direction: column;
+}
+
+home main {
   display: flex;
   flex-direction: column;
   padding: 25px;
@@ -145,7 +150,6 @@ ul h2 {
   right: 3px;
 }
 
-
 .edit-btn:hover {
   background-color: #B4B6B8;
 }
@@ -153,30 +157,25 @@ ul h2 {
 .edit-btn i {
   color: #5A5B5C;
 }
-.editing {
-  z-index: 1;
-  min-height: 150px;
-}
 
-.editing:hover {
-  background-color: white;
-}
-
-.editing .edit-form {
+.edit-item {
   flex: 1;
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
 }
 
-.editing .edit-form textarea {
+.edit-item textarea {
   flex: 1;
   font-size: 20px;
   border: none;
   resize: none;
+  border-radius: 3px;
+  padding: 5px;
+  box-sizing: border-box;
+  min-height: 75px;
 }
 
-.editing .edit-form textarea:focus {
+.edit-item textarea:focus {
   outline: none;
 }
 
@@ -323,8 +322,4 @@ ul h2 {
   font-size: 15px;
   margin: 20px 0;
   box-sizing: border-box;
-}
-
-.hide {
-  display: none;
 }
