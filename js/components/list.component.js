@@ -35,7 +35,7 @@
                 <form novalidate>
                   <textarea name="task" ng-model="$ctrl.updatedTask" class="item-to-add" warp="soft" autofocus>{{task.name}}</textarea>
                   <div>
-                    <button type="button" ng-click="$ctrl.updateTask({ listId: $ctrl.list.id, taskId: task.id, update: $ctrl.updatedTask })" class="add-btn btn">Save</button>
+                    <button type="button" ng-click="$ctrl.updateTask({ listId: $ctrl.list.id, taskId: task.id, update: $ctrl.updatedTask }); $ctrl.toggleEditForm(0, '', 0)" class="add-btn btn">Save</button>
                     <button type="button" ng-click="$ctrl.toggleEditForm(0, '', 0)" class="exit-btn" id="exit-add-form">
                       <i class="fa fa-times"></i>
                     </button>
@@ -63,7 +63,7 @@
             ng-show="$ctrl.showAddForm($ctrl.list.id)">
             <textarea name="task" placeholder="Add item" ng-model="$ctrl.newTask" class="item-to-add" warp="soft" autofocus></textarea>
             <div>
-              <button type="button" ng-click="$ctrl.addTask({ listId: $ctrl.list.id, addition: $ctrl.newTask })" class="add-btn btn">
+              <button type="button" ng-click="$ctrl.addTask({ listId: $ctrl.list.id, addition: $ctrl.newTask }); $ctrl.toggleAddForm(0)" class="add-btn btn">
                 Add
               </button>
               <button type="button" ng-click="$ctrl.toggleAddForm(0)" class="exit-btn" id="exit-add-form">
@@ -87,10 +87,6 @@
         vm.newTask = '';
         vm.updatedTask = '';
         vm.editing = false;
-        vm.btnText = {
-          add: 'Add',
-          save: 'Save'
-        }
       }
 
       vm.toggleHoverTask = function(task, list) {
@@ -123,6 +119,7 @@
 
       vm.toggleAddForm = function(list) {
         vm.listToAddTo = list;
+        vm.newTask = '';
       }
 
       vm.showAddForm = function(listId) {
