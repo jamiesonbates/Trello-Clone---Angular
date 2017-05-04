@@ -10,7 +10,7 @@
         </header>
 
         <main>
-          <new-list></new-list>
+          <new-list add-list="$ctrl.addList(title)"></new-list>
 
           <div class="all-lists">
             <div class="list" ng-repeat="list in $ctrl.lists">
@@ -41,6 +41,15 @@
           title: 'Your List',
           tasks: [{ id: 1, name: 'Go shopping' }, { id: 2, name: 'Go to soccer game' }]
       }];
+    }
+
+    vm.addList = function(title) {
+      console.log(title);
+      const nextLists = vm.lists;
+
+      nextLists.push({ id: vm.lists.length + 1, title, tasks: [] });
+
+      vm.lists = nextLists;
     }
 
     vm.deleteList = function(listId) {
@@ -86,7 +95,6 @@
     }
 
     vm.updateTask = function(listId, taskId, update) {
-      console.log(listId, taskId, update);
       const nextLists = [];
       const nextTasks = [];
 
