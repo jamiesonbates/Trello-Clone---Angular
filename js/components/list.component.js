@@ -42,7 +42,7 @@
                   </div>
                 </form>
 
-                <button ng-click="$ctrl.deleteTask({ listId: $ctrl.list.id, taskId: task.id })" class="btn del-btn">
+                <button ng-click="$ctrl.deleteTask({ listId: $ctrl.list.id, taskId: task.id }); $ctrl.toggleEditForm(0, '', 0)" class="btn del-btn">
                   <i class="fa fa-trash"></i>
                 </button>
               </div>
